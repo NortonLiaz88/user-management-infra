@@ -1,0 +1,37 @@
+version: '3.8'
+
+services:
+  postgres:
+    container_name: challenge_db
+    image: postgres:13
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: admin
+      PGDATA: /data/postgres
+    volumes:
+      - ./data/postgres:/data/postgres
+    ports:
+      - '5432:5432'
+    networks:
+      - challenge-networks
+
+  pgadmin:
+    container_name: challenge_pgadmin
+    image: dpage/pgadmin4
+    restart: unless-stopped
+    environment:
+      PGADMIN_DEFAULT_EMAIL: "admin@domain.com"
+      PGADMIN_DEFAULT_PASSWORD: "123456"
+    ports:
+      - "9099:80"
+    depends_on:
+      - postgres
+    networks:
+      - challenge-networks
+  
+
+networks:
+  challenge-networks:
+    name: 'challenge-networks'
+    driver: bridge

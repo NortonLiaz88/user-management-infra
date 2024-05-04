@@ -1,0 +1,13 @@
+# Volumes
+data/
+
+# Dependencies
+node_modules/
+
+# Lock files
+yarn.lock
+
+# Database Auto-generated Migrations
+
+# File History Changes
+.history/

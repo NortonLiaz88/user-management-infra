@@ -1,0 +1,27 @@
+stages:
+  - build
+  - deploy
+
+### DEPLOY TO DEVELOP ###
+run_deploy_dev:
+  image: docker/compose:1.29.2
+  stage: deploy
+  script:
+    - docker-compose up -d --force-recreate
+  tags:
+    - deploy
+
+### DEPLOY TO PRODUCTION ###
+run_deploy_prod:
+  image: docker/compose:1.29.2
+  stage: deploy
+  variables:
+    GIT_STRATEGY: none
+  only:
+    - master
+  except:
+    - branches
+  script:
+    - docker-compose up -d --force-recreate
+  tags:
+    - deploy
